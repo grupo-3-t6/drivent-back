@@ -17,6 +17,20 @@ async function main() {
   }
 
   console.log({ event });
+
+  await prisma.ticket.createMany({
+    data: [
+      { 
+        name: "Presencial",
+        price: 25000
+      },
+      { 
+        name: "Online",
+        price: 10000
+      }
+    ],
+    skipDuplicates: true
+  })
 }
 
 main()
