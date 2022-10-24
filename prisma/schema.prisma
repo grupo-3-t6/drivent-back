@@ -74,12 +74,24 @@ model Ticket {
   price         Int       
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+  Payment       Payment[]           
 }
 
 model Stay {
   id            Int        @id @default(autoincrement())
   name          String     @unique
   price         Int 
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  Payment       Payment[]
+}
+
+model Payment {
+  id            Int        @id @default(autoincrement())
+  Ticket        Ticket     @relation(fields: [ticketId], references: [id])
+  ticketId      Int
+  Stay          Stay       @relation(fields: [stayId], references: [id]) 
+  stayId        Int 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 }
