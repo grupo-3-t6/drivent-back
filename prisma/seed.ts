@@ -33,7 +33,7 @@ async function main() {
   await prisma.stay.createMany({
     data: [
       { 
-        name: "Sem hotel",
+        name: "Sem Hotel",
         price: 0
       },
       { 
