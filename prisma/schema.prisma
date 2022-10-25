@@ -84,7 +84,7 @@ model Stay {
   price         Int 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
-  Payment       Payment[]
+  Payment       Payment[]  
 }
 
 model Payment {
@@ -93,7 +93,7 @@ model Payment {
   userId        Int        @unique     
   Ticket        Ticket     @relation(fields: [ticketId], references: [id])
   ticketId      Int
-  Stay          Stay?       @relation(fields: [stayId], references: [id]) 
+  Stay          Stay?      @relation(fields: [stayId], references: [id]) 
   stayId        Int?        
   finalPrice    Int   
   createdAt     DateTime   @default(now())
