@@ -16,8 +16,6 @@ async function main() {
     });
   }
 
-  console.log({ event });
-
   await prisma.ticket.createMany({
     data: [
       { 
@@ -30,7 +28,21 @@ async function main() {
       }
     ],
     skipDuplicates: true
-  })
+  });
+
+  await prisma.stay.createMany({
+    data: [
+      { 
+        name: "Sem hotel",
+        price: 0
+      },
+      { 
+        name: "Com Hotel",
+        price: 35000
+      }
+    ],
+    skipDuplicates: true
+  });
 }
 
 main()
