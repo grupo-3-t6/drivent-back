@@ -1,5 +1,5 @@
 import { notFoundError, conflictError } from '@/errors';
-import paymentRepository, { CreatePaymentParams } from '@/repositories/payment-repository';
+import paymentRepository, { CreatePaymentParams, PaymentResponse } from '@/repositories/payment-repository';
 import stayRepository from '@/repositories/stay-repository';
 import ticketRepository from '@/repositories/ticket-repository';
 
@@ -41,7 +41,26 @@ async function postCreatePayment({ ticketId, stayId, userId, finalPrice }: Creat
   await paymentRepository.insert({ ticketId, stayId, userId, finalPrice: formatPrice(finalPrice) });
 }
 
+function formatPaymentResponse(payment: PaymentResponse) {
+  const ticket = payment.Ticket;
+  const stay = payment.Stay;
+
+  delete payment.Ticket;
+  delete payment.Stay;
+
+  return { id: payment.id, userId: payment.userId, finalPrice: payment.finalPrice / 100, ticket, stay };
+}
+
+async function getPayment(userId: number) {
+  const payment = await paymentRepository.findByUserId(userId);
+
+  if (!payment) return {};
+
+  return formatPaymentResponse(payment);
+}
+
 const paymentService = {
+  getPayment,
   postCreatePayment,
 };
 

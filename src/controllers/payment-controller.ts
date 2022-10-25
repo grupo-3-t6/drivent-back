@@ -11,3 +11,9 @@ export async function postCreatePayment(req: AuthenticatedRequest, res: Response
 
   return res.sendStatus(httpStatus.OK);
 }
+
+export async function getPayment(req: AuthenticatedRequest, res: Response) {
+  const payment = await paymentService.getPayment(req.userId);
+
+  return res.status(httpStatus.OK).send(payment);
+}
