@@ -18,6 +18,7 @@ model User {
   updatedAt  DateTime     @updatedAt
   Session    Session[]
   Enrollment Enrollment[]
+  Payment    Payment[] 
 }
 
 model Session {
@@ -72,6 +73,29 @@ model Ticket {
   id            Int        @id @default(autoincrement())
   name          String     @unique
   price         Int       
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  Payment       Payment[]           
+}
+
+model Stay {
+  id            Int        @id @default(autoincrement())
+  name          String     @unique
+  price         Int 
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  Payment       Payment[]  
+}
+
+model Payment {
+  id            Int        @id @default(autoincrement())
+  User          User       @relation(fields: [userId], references: [id]) 
+  userId        Int        @unique     
+  Ticket        Ticket     @relation(fields: [ticketId], references: [id])
+  ticketId      Int
+  Stay          Stay?      @relation(fields: [stayId], references: [id]) 
+  stayId        Int?        
+  finalPrice    Int   
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 }
