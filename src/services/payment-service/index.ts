@@ -34,7 +34,7 @@ function formatPrice(price: number) {
 async function postCreatePayment({ ticketId, stayId, userId, finalPrice }: CreatePaymentParams) {
   await checkIfTheTicketIdExists(ticketId);
 
-  await checkIfTheStayIdExists(stayId);
+  if (stayId) await checkIfTheStayIdExists(stayId);
 
   await checksIfTheUserHasAlreadyPurchased(userId);
 
@@ -54,7 +54,7 @@ function formatPaymentResponse(payment: PaymentResponse) {
 async function getPayment(userId: number) {
   const payment = await paymentRepository.findByUserId(userId);
 
-  if (!payment) return {};
+  if (!payment) return null;
 
   return formatPaymentResponse(payment);
 }
