@@ -4,6 +4,7 @@ node_modules
 !.env.example
 yarn.lock
 .vscode
+/coverage
 
 # wakatime
 .wakatime-project
